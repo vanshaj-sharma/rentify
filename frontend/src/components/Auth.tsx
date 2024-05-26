@@ -62,7 +62,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
                 onChange={(e) => {
                   setPostInputs({
                     ...postInputs,
-                    firstName: e.target.value,
+                    firstname: e.target.value,
                   });
                 }}
               />

@@ -83,6 +83,23 @@ proutes.get("/", checkValidBuyerOrUser, async (c) => {
   });
 });
 
+proutes.get("/:id", checkValidBuyerOrUser, async (c) => {
+  const buildingid = c.req.param("id");
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  const buildings = await prisma.property.findFirst({
+    where: {
+      id: buildingid,
+    },
+  });
+
+  return c.json({
+    buildings,
+  });
+});
+
 //seller's properties
 proutes.get("/myproperties", checkValidSeller, async (c) => {
   //   const body = await c.req.json();
