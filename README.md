@@ -7,3 +7,9 @@ I am trying to make the frontend such that it looks like a medium clone, which i
 
 code can be found
 https://github.com/vanshaj-sharma/rentify
+
+## was not able to complete frontend
+
+## backend routes are complete
+
+## thank you for going through my project!!
