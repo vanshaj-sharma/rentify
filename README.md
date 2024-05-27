@@ -1,4 +1,6 @@
-backend is hosted using cloudflare workers
+## This project is made with the help of cloudflare workers and react as frontend
+
+live link -> https://rentify-six-olive.vercel.app/
 
 link to backend routes ->
 https://backend-rentify.vanshajsharma4.workers.dev
