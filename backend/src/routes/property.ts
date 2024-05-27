@@ -76,7 +76,27 @@ proutes.get("/", checkValidBuyerOrUser, async (c) => {
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
 
-  const buildings = await prisma.property.findMany();
+  const buildings = await prisma.property.findMany({
+    select: {
+      id: true,
+      address: true,
+      place: true,
+      numberOfBedrooms: true,
+      numberOfBathrooms: true,
+      nearbyHospitals: true,
+      nearbyColleges: true,
+      price: true,
+      description: true,
+      propertyType: true,
+      amenities: true,
+      builtYear: true,
+      owner: {
+        select: {
+          firstname: true,
+        },
+      },
+    },
+  });
 
   return c.json({
     buildings,
@@ -92,6 +112,25 @@ proutes.get("/:id", checkValidBuyerOrUser, async (c) => {
   const buildings = await prisma.property.findFirst({
     where: {
       id: buildingid,
+    },
+    select: {
+      id: true,
+      address: true,
+      place: true,
+      numberOfBedrooms: true,
+      numberOfBathrooms: true,
+      nearbyHospitals: true,
+      nearbyColleges: true,
+      price: true,
+      description: true,
+      propertyType: true,
+      amenities: true,
+      builtYear: true,
+      owner: {
+        select: {
+          firstname: true,
+        },
+      },
     },
   });
 

@@ -18,7 +18,7 @@ export interface BuildingSt {
 
 export const useBuilding = ({ id }: { id: string }) => {
   const [loading, setLoading] = useState(true);
-  const [porperty, setProperty] = useState();
+  const [property, setProperty] = useState();
 
   useEffect(() => {
     axios
@@ -28,13 +28,13 @@ export const useBuilding = ({ id }: { id: string }) => {
         },
       })
       .then((response) => {
-        setProperty(response.data.blog);
+        setProperty(response.data.buildings);
         setLoading(false);
       });
   }, [id]);
   return {
     loading,
-    porperty,
+    property,
   };
 };
 
@@ -44,13 +44,13 @@ export const useBuildings = () => {
 
   useEffect(() => {
     axios
-      .get(`${BACKEND_URL}/api/v1/properties/`, {
+      .get(`${BACKEND_URL}/api/v1/properties`, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
       })
       .then((response) => {
-        setBuildings(response.data.posts);
+        setBuildings(response.data.buildings);
         setLoading(false);
       });
   }, []);

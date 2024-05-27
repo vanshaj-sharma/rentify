@@ -8,36 +8,49 @@ import { Link } from "react-router-dom";
 //   id: string;
 // }
 
-export const ListingCard = () => {
+interface ListingCardItems {
+  id: string;
+  sellerName: string;
+  address?: string;
+  place?: string;
+  numberOfBedrooms?: number;
+  numberOfBathrooms?: number;
+  nearbyHospitals?: string;
+  nearbyColleges?: string;
+  price?: number;
+  description?: string;
+  propertyType?: string;
+  amenities?: string;
+  builtYear?: number;
+}
+
+export const ListingCard = ({
+  id,
+  sellerName,
+  builtYear,
+  amenities,
+  address,
+  place,
+}: ListingCardItems) => {
   return (
-    // <Link to={`/blog/${id}`}>
-    <div className="p-4 border-b border-slate-200 pb-4 w-screen max-w-screen-md cursor-pointer">
-      <div className="flex">
-        <div className="font-extralight pl-2 flex justify-center flex-col text-sm">
-          {/* {authorName} */}
-          SellerName
+    <Link to={`/listings/${id}`}>
+      <div className="p-4 border-b border-slate-200 pb-4 w-screen max-w-screen-md cursor-pointer">
+        <div className="flex">
+          <div className="font-extralight pl-2 flex justify-center flex-col text-sm">
+            {sellerName}
+          </div>
+          <div className=" flex justify-center flex-col pl-2  text-sm">
+            <Circle />
+          </div>
+          <div className="pl-2 font-extralight text-slate-500 text-sm flex justify-center flex-col ">
+            {builtYear}
+          </div>
         </div>
-        <div className=" flex justify-center flex-col pl-2  text-sm">
-          <Circle />
-        </div>
-        <div className="pl-2 font-extralight text-slate-500 text-sm flex justify-center flex-col ">
-          {/* {publishedDate} */}
-          builtYear
-        </div>
+        <div className="text-xl font-semibold pt-2">{place}</div>
+        <div className="text-md font-thin">{address}</div>
+        <div className="text-slate-500 text-sm font-thin pt-4">{amenities}</div>
       </div>
-      <div className="text-xl font-semibold pt-2">{/* {title} */}Place</div>
-      <div className="text-md font-thin">
-        {/* {content.slice(0, 100) + "......"} */} add Address here
-      </div>
-      <div className="text-slate-500 text-sm font-thin pt-4">
-        {/* {`${Math.ceil(
-          content.length / 100
-        )} 
-        minute(s) read`} */}
-        price here
-      </div>
-      {/* </Link> */}
-    </div>
+    </Link>
   );
 };
 
