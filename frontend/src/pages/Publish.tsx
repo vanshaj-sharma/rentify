@@ -6,8 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 export const Publish = () => {
   const navigate = useNavigate();
-  //   const [title, setTitle] = useState("");
-  //   const [description, setDescription] = useState("");
   const [info, setInfo] = useState({
     address: "",
     place: "",
@@ -49,7 +47,17 @@ export const Publish = () => {
             className="mt-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
             placeholder="Write place here"
           />
-
+          <input
+            onChange={(e) => {
+              setInfo({
+                ...info,
+                propertyType: e.target.value,
+              });
+            }}
+            type="text"
+            className="mt-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
+            placeholder="Write property type"
+          />
           <input
             onChange={(e) => {
               setInfo({
@@ -157,7 +165,17 @@ export const Publish = () => {
               const response = await axios.post(
                 `${BACKEND_URL}/api/v1/properties`,
                 {
-                  info,
+                  address: info.address,
+                  place: info.place,
+                  numberOfBedrooms: info.numberOfBedrooms,
+                  numberOfBathrooms: info.numberOfBathrooms,
+                  nearbyHospitals: info.nearbyHospitals,
+                  nearbyColleges: info.nearbyColleges,
+                  price: info.price,
+                  description: info.description,
+                  propertyType: info.propertyType,
+                  amenities: info.amenities,
+                  builtYear: info.builtYear,
                 },
                 {
                   headers: {
