@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
-import { sign } from "hono/jwt";
+import { verify, sign } from "hono/jwt";
 
 export const userRouter = new Hono<{
   Bindings: {
@@ -81,5 +81,37 @@ userRouter.post("/signin", async (c) => {
   } catch (e) {
     c.status(403);
     return c.json({ error: "error while signing in" });
+  }
+});
+
+userRouter.get("/buyerorseller", async (c) => {
+  const header = c.req.header("authorization") || "";
+  const token = header.split(" ")[1];
+
+  //dbconnection
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  try {
+    const payload = await verify(token, c.env.JWT_SECRET);
+    if (!payload) {
+      c.status(401);
+      return c.json({ error: "unauthorized token" });
+    }
+
+    const seller = await prisma.user.findFirst({
+      where: {
+        id: Number(payload.id),
+      },
+    });
+
+    if (seller?.userType != "seller") {
+      return c.json({ userType: "buyer" });
+    }
+    return c.json({ userType: "seller" });
+  } catch (err) {
+    c.status(403);
+    return c.json({ Message: "Unauthorized user detected" });
   }
 });
